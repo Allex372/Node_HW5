@@ -6,6 +6,10 @@ router.get('/', userController.getAllUsers);
 
 router.get('/:id', userController.getSingleUser);
 
-router.post('/', userMiddleware.isUserValid, userController.createUser);
+router.post('/',
+    userMiddleware.isLoginExisted,
+    userMiddleware.isEmailCreated,
+    userMiddleware.isUserValid,
+    userController.createUser);
 
 module.exports = router;
