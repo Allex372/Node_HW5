@@ -2,6 +2,12 @@ const router = require('express').Router();
 
 const { authMiddleware } = require('../middleware');
 
-router.post('/', authMiddleware.isEmailValid);
+const { authController } = require('../controller');
+
+router.post('/',
+    authMiddleware.isLoginExisted,
+    authMiddleware.isEmailCreated,
+    authMiddleware.isUserValid,
+    authController.isEmailValid);
 
 module.exports = router;

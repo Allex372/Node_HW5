@@ -1,5 +1,6 @@
 module.exports = {
     carController: require('./car.controller'),
     ownerController: require('./owner.controller'),
-    userController: require('./user.controller')
+    userController: require('./user.controller'),
+    authController: require('./auth.controller')
 };

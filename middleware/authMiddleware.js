@@ -1,19 +1,45 @@
+const { errorCodes } = require('../constant');
 const { User } = require('../dataBase/models');
-const { passwordsHasher } = require('../helper');
-const { errorMessages: { USER_NOT_FOUND } } = require('../error');
+const { userValidators } = require('../validators');
 
 module.exports = {
-    isEmailValid: async (req, res, next) => {
+    isUserValid: (req, res, next) => {
         try {
-            const { email, password } = req.body;
+            const { error } = userValidators.createUserValidator.validate(req.body);
 
-            const user = await User.findOne({ email });
-
-            if (!user) {
-                throw new Error(USER_NOT_FOUND);
+            if (error) {
+                throw new Error(error.details[0].message);
             }
 
-            passwordsHasher.compare(password, user.password);
+            next();
+        } catch (e) {
+            res.status(errorCodes.BAD_REQUEST).json(e.message);
+        }
+    },
+
+    isEmailCreated: async (req, res, next) => {
+        try {
+            const { email } = req.body;
+
+            const user = await User.findOne({ email });
+            if (user) {
+                throw new Error('Email already exist');
+            }
+
+            next();
+        } catch (e) {
+            res.json(e.message);
+        }
+    },
+
+    isLoginExisted: async (req, res, next) => {
+        try {
+            const { name } = req.body;
+
+            const user = await User.findOne({ name });
+            if (user) {
+                throw new Error(`Name: ${name} already exist`);
+            }
 
             next();
         } catch (e) {

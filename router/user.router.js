@@ -12,4 +12,6 @@ router.post('/',
     userMiddleware.isUserValid,
     userController.createUser);
 
+router.delete('/', userController.deleteUserByName);
+
 module.exports = router;

@@ -37,5 +37,10 @@ module.exports = {
     USER_WAS_CREATED: {
         en: 'User was created',
         ua: 'Користувача створено'
+    },
+
+    ENTERED: {
+        en: 'Entered',
+        ua: 'Ви ввійшли'
     }
 };

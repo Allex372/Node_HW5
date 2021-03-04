@@ -38,5 +38,17 @@ module.exports = {
         } catch (e) {
             res.json(e);
         }
+    },
+
+    deleteUserByName: async (req, res) => {
+        try {
+            const { name } = req.body;
+
+            await userService.deleteUserByName(name);
+
+            res.json(errorMessages.USER_WAS_DELETED);
+        } catch (e) {
+            res.json(e.message);
+        }
     }
 };
