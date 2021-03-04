@@ -42,7 +42,7 @@ module.exports = {
 
     deleteUserByName: async (req, res) => {
         try {
-            const { name } = req.body;
+            const { name } = req.params.name;
 
             await userService.deleteUserByName(name);
 
