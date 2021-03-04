@@ -1,5 +1,6 @@
 const { User } = require('../dataBase/models');
 const { passwordsHasher } = require('../helper');
+const { errorMessages: { USER_NOT_FOUND } } = require('../error');
 
 module.exports = {
     isEmailValid: async (req, res, next) => {
@@ -9,7 +10,7 @@ module.exports = {
             const user = await User.findOne({ email });
 
             if (!user) {
-                throw new Error('NO FOUND');
+                throw new Error(USER_NOT_FOUND);
             }
 
             passwordsHasher.compare(password, user.password);

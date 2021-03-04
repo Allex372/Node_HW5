@@ -7,6 +7,7 @@ module.exports = {
     getAllUsers: async (req, res) => {
         try {
             const allUsers = await userService.findUsers();
+
             res.json(allUsers);
         } catch (e) {
             res.status(errorCodes.BAD_REQUEST).json.message(e);
