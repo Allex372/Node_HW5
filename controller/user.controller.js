@@ -1,5 +1,6 @@
 const { userService } = require('../service');
 const { errorCodes } = require('../constant');
+const { errorMessages } = require('../error');
 const { passwordsHasher } = require('../helper');
 
 module.exports = {
@@ -15,6 +16,7 @@ module.exports = {
     getSingleUser: async (req, res) => {
         try {
             const userId = req.params.id;
+
             const user = await userService.findUserById(userId);
 
             res.json(user);
@@ -26,10 +28,12 @@ module.exports = {
     createUser: async (req, res) => {
         try {
             const { password } = req.body;
+
             const hashPassword = await passwordsHasher.hash(password);
+
             await userService.createUser({ ...req.body, password: hashPassword });
 
-            res.status(201).json('USer was Created');
+            res.status(201).json(errorMessages.USER_IS_CREATED);
         } catch (e) {
             res.json(e);
         }
